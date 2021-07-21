@@ -26,7 +26,8 @@
   <div role="tablist">    
     <b-card v-for="(debt) in products" no-body class="mb-1" :key="debt.id">
       <b-card-header header-tag="header" class="p-1" role="tab">
-        <b-button block v-b-toggle="'accordion-'+debt.id" variant="info">{{debt.descripcion}}</b-button>
+        <b-button block v-b-toggle="'accordion-'+debt.id" variant="info">{{debt.descripcion}}</b-button>        
+        <b-button id="borrarMenu" pill variant="danger"  @click='borrarMenu(debt.id)' >Borrar Menu</b-button>    
       </b-card-header>
       <b-collapse :id="'accordion-'+debt.id" visible accordion="my-accordion" role="tabpanel">
         <b-card-body>          
@@ -53,7 +54,7 @@ export default{
         },
         methods: {
             getAllMenu () {
-            this.$http.get('http://tidra.cl/menu/api/getMenuByRutEmpresa.php?rutEmpresa=' + this.rut, {
+            this.$http.get('http://c4tic.cl/menu/api/getMenuByRutEmpresa.php?rutEmpresa=' + this.rut, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -63,14 +64,14 @@ export default{
                 console.log(response)
             })
         },
-        deleteItem (id) {
+        borrarMenu (id) {
             let _this = this
-            this.$http.get('http://tidra.cl/menu/api/deleteMenu.php?id=' + id, {
+            this.$http.get('http://c4tic.cl/menu/api/deleteMenu.php?id=' + id, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then((response) => {
-              _this.getAllSubMenu()
+              _this.getAllMenu()
             })
         },
         agregarMenu () {
@@ -79,7 +80,7 @@ export default{
           this.rut = localStorage.rut
           formData.append('descripcion', this.descripcion)
           formData.append('rutEmpresa', this.rut)
-          this.$http.post('http://tidra.cl/menu/api/agregarMenu.php', formData)
+          this.$http.post('http://c4tic.cl/menu/api/agregarMenu.php', formData)
           .then(function (response) {
             _this.getAllMenu()
             _this.descripcion = ''
@@ -94,7 +95,7 @@ export default{
     },
     mounted () {
       this.rut = localStorage.rut
-      this.$http.get('http://tidra.cl/menu/api/getMenuByRutEmpresa.php?rutEmpresa=' + this.rut).then((response) => {
+      this.$http.get('http://c4tic.cl/menu/api/getMenuByRutEmpresa.php?rutEmpresa=' + this.rut).then((response) => {
             this.products = response.body
         }, (response) => {
       })

@@ -62,7 +62,7 @@ export default{
         methods: {
             getAllSubMenu () {
             this.show = true
-            this.$http.get('http://tidra.cl/menu/api/getSubMenuById.php?idItem=' + this.$props.idMenu, {
+            this.$http.get('http://c4tic.cl/menu/api/getSubMenuById.php?idItem=' + this.$props.idMenu, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -75,7 +75,7 @@ export default{
         },
         deleteSubItem (id) {
             let _this = this
-            this.$http.get('http://tidra.cl/menu/api/deleteSubMenu.php?id=' + id, {
+            this.$http.get('http://c4tic.cl/menu/api/deleteSubMenu.php?id=' + id, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -90,7 +90,7 @@ export default{
           formData.append('descripcion', this.descripcion)
           formData.append('precio', this.precio)
           formData.append('id_item', this.idMenu)
-          this.$http.post('http://tidra.cl/menu/api/agregarSubMenu.php', formData)
+          this.$http.post('http://c4tic.cl/menu/api/agregarSubMenu.php', formData)
           .then(function (response) {
             _this.getAllSubMenu()
             _this.descripcion = ''
@@ -107,7 +107,7 @@ export default{
     },
     mounted () {
       this.show = true
-      this.$http.get('http://tidra.cl/menu/api/getSubMenuById.php?idItem=' + this.$props.idMenu)
+      this.$http.get('http://c4tic.cl/menu/api/getSubMenuById.php?idItem=' + this.$props.idMenu)
         .then((response) => {
           this.products = response.body
           this.show = false
